@@ -12,6 +12,41 @@ var sdialoglist
 var stakelist
 var FileOptions
 
+var mtakefilelist = [
+	"mtake_1h1",
+	"mtake_1h2",
+	"mtake_1h3",
+	"mtake_1h4",
+	"mtake_1h5",
+	"mtake_2b1",
+	"mtake_2h1",
+	"mtake_2h2",
+	"mtake_3b1",
+	"mtake_3h1",
+	"mtake_3h2",
+	"mtake_3h3",
+	"mtake_3h4",
+	"mtake_3h5",
+	"mtake_3n2",
+	"mtake_3n3",
+	"mtake_4h1",
+	"mtake_4h2",
+	"mtake_4h3",
+	"mtake_4h4",
+	"mtake_4h5",
+	"mtake_5b1",
+	"mtake_5h1",
+	"mtake_5h2",
+	"mtake_5h3",
+	"mtake_5n1",
+	"mtake_6h1",
+	"mtake_6h2",
+	"mtake_6h3",
+	"mtake_gen",
+	]
+var mtakedict = {}
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -49,6 +84,9 @@ func LoadFiles():
 	ParseStakes(stakelist)
 	#stakelist.Export()
 	
+	MtakeDictCreate()#dict of mtake lists gets exported to variable mtakedict
+	#MtakeDictExport()
+	
 	#stakelist.GetObjectwithKey(17).Print()
 	#for stake in stakelist.GetDialogeStakeEntrys(18):
 	#	print(charlist.GetObjectwithKey(stake.Person).Name + ": " + stake.Text)
@@ -60,6 +98,7 @@ func ExportFiles():
 	moodlist.Export()
 	sdialoglist.Export()
 	stakelist.Export()
+	MtakeDictExport()
 
 func ReadANSIFile(filepath):
 	var output = []
@@ -71,7 +110,7 @@ func ReadANSIFile(filepath):
 	var exit_code = OS.execute(
 		"C:/Python310/python.exe", 
 		[
-			"\"D:\\Programme\\Godot\\encoding_convert.py\"",
+			"\"D:\\Programme\\Godot\\Aquanox-2-Dialog-Editor-Godot\\encoding_convert.py\"",
 			"--file",
 		] + filepath_split + [
 			"--operation",
@@ -121,7 +160,7 @@ class FileDataTypes:
 		var exit_code = OS.execute(
 			"C:/Python310/python.exe", 
 			[
-				"\"D:\\Programme\\Godot\\encoding_convert.py\"",
+				"\"D:\\Programme\\Godot\\Aquanox-2-Dialog-Editor-Godot\\encoding_convert.py\"",
 				"--file",
 			] + filepath_split + [
 				"--operation",
@@ -988,6 +1027,237 @@ func ParseStakes(listobj):
 			if line == "}":
 				listobj.table[entryname] = tempchar
 				tempchar = Stake.new()
+				entryname = ""
+				readstate = "SearchTableEntry"
+				continue
+
+	if entryname != "":
+		assert(false,"Current TableEntry was not closed")
+	if readstate != "TableClosed":
+		assert(false,"Search did not find closing bracket")
+
+	Lines = file_loc.split("\n")
+	readstate = "TableStart"
+	tempchar = Stake.new()#Object will not be used
+	entryname = ""
+	var tempcomment = ""
+	for line in Lines:
+		line = line.strip_edges()
+		if len(line) == 0: #Empty Line
+			continue
+		if readstate == "TableStart":#Search for [Table]
+			if "[Table]" in line:
+				readstate = "TableOpen"
+				continue
+		if readstate == "TableOpen":#Search for { after [Table]
+			if line == "{":
+				readstate = "SearchTableEntry"
+				continue
+		if readstate == "SearchTableEntry":#Search for [
+			if line[0] == "[":
+				line = line.split("[")[1]
+				line = line.split("]")[0]
+				entryname = line
+				tempchar = listobj.table[entryname]
+				readstate = "TableEntryOpen"
+				continue
+		if readstate == "SearchTableEntry":#Search for last }
+			if line[0] == "}":
+				readstate = "TableClosed"
+				break#End
+		if readstate == "TableEntryOpen":
+			if line == "{":
+				readstate = "TableEntryData"
+				continue
+		if readstate == "TableEntryData":
+			if "//" in line:
+				if tempchar.Key == -1:
+					tempcomment = line.split("/")[2]
+				else:
+					tempchar.Comment_loc = line.split("/")[2] #Needed if table number is not stable
+			if "Key = " in line:
+				var key = int(line.split(" ")[2])
+				if key != tempchar.Key:
+					print("Key in Tablekey in .loc does not match Key in Tablekey in .des")
+					print(tempchar)
+					print(key)
+					assert(false,"Key in Tablekey in .loc does not match Key in Tablekey in .des")
+			if "Text = " in line:
+				#print_debug(line.split("\""))
+				tempchar.Text = line.split("\"")[1]
+			if line == "}":
+				#listobj.table[entryname] = tempchar # Not needed as the object is already in the list
+				tempchar = Stake.new()
+				entryname = ""
+				tempcomment = ""
+				readstate = "SearchTableEntry"
+				continue
+
+func MtakeDictCreate():
+	for filename in mtakefilelist:
+		var mtakelist = Mtake_List.new(FileOptions)
+		mtakelist.filepath_des = mtakelist.filepath_des + filename + ".des"
+		mtakelist.filepath_loc = mtakelist.filepath_loc + filename + ".loc"
+		mtakelist.filename = filename
+		ParseMtakes(mtakelist)
+		mtakedict[filename] = mtakelist
+	
+func MtakeDictExport():
+	for key in mtakedict.keys():
+		mtakedict[key].Export()
+
+class Mtake_List extends FileDataTypes:
+	var filepath_des = ""
+	var filepath_loc = ""
+	var table = {}
+	var last_key = -1
+	var filename = ""
+	
+	func _init(FileOptions):
+		self.aquanox_basepath = FileOptions.aquanox_basepath
+		self.locale = FileOptions.locale
+		self.export_basepath = FileOptions.export_basepath
+		self.filepath_des = aquanox_basepath + "dat/sty/"
+		self.filepath_loc = aquanox_basepath + "dat/sty/" + self.locale + "/"
+
+	func GetObjectwithKey(key: int):
+		#print(f"ProvidedKey:{key}")
+		if not self.table.is_empty():
+			for table_entry in self.table:
+				if self.table[table_entry].Key == key:
+					return self.table[table_entry]
+		else:
+			return Mtake.new()
+
+	func Export():		
+		var currenttimepath = Time.get_datetime_string_from_system().replace(":","-").left(-3)
+		var outputpath_des = self.export_basepath + currenttimepath + "/dat/sty/" + filename + ".des"
+		var outputpath_loc = self.export_basepath + currenttimepath + "/dat/sty/" + self.locale + "/" + filename + ".loc"
+
+		var error = DirAccess.make_dir_recursive_absolute(self.export_basepath + currenttimepath + "/dat/sty/")
+		if error != OK:
+			printerr("Failure!")
+		error = DirAccess.make_dir_recursive_absolute(self.export_basepath + currenttimepath + "/dat/sty/" + self.locale)
+		if error != OK:
+			printerr("Failure!")
+
+		var output_des = "[Table]\n"
+		output_des += "{\n"
+		output_des += "\n"
+
+		for entry in self.table.keys():
+			var char = self.table[entry]
+			output_des += "    [" + entry + "]\n"
+			output_des += "    {\n"
+			if char.Comment_des != "NO .DES COMMENT":
+				output_des += "        //" + char.Comment_des + "\n"
+			output_des += "        Key = " + str(char.Key) + "\n"
+			output_des += "        Person = " + str(char.Person) + "\n"
+			output_des += "        Wav = \"" + char.Wav + "\"\n"
+			output_des += "        Mood = " + str(char.Mood) + "\n"
+			output_des += "    }\n"
+			output_des += "\n"
+		output_des += "}\n"
+		#print(output_des)
+
+		var output_loc = "[Table]\n"
+		output_loc += "{\n"
+		output_loc += "\n"
+
+		for entry in self.table.keys():
+			var char = self.table[entry]
+			output_loc += "    [" + entry + "]\n"
+			output_loc += "    {\n"
+			if char.Comment_loc != "NO .LOC COMMENT":
+				output_loc += "        //" + char.Comment_des + "\n"
+			output_loc += "        Key = " + str(char.Key) + "\n"
+			output_loc += "        Text = \"" + char.Text + "\"\n"
+			output_loc += "    }\n"
+			output_loc += "\n"
+		output_loc += "}\n"
+		#print(output_loc)
+		WriteANSIFile(outputpath_des, output_des)
+		WriteANSIFile(outputpath_loc, output_loc)
+
+class Mtake extends FileDataTypes:
+	var Key = -1
+	var Person = -1
+	var Text = ""
+	var Wav = "-1"
+	var WavPath = "-1"
+	var Mood = -1
+	var Comment_des = "NO .DES COMMENT"
+	var Comment_loc = "NO .LOC COMMENT"
+
+	func Print():
+		print("Key: " + str(self.Key))
+		print("Person: " + str(self.Person))
+		print("Text: " + self.Text)
+		print("Wav: " + self.Wav)
+		print("WavPath: " + self.WavPath)
+		print("Mood: " + str(self.Mood))
+		print("Comment_des: " + self.Comment_des)
+		print("Comment_loc: " + self.Comment_loc)
+
+func ParseMtakes(listobj):
+	var file_des = ""
+	var file_loc = ""
+	#if listobj.filepath_des != "" or listobj.filepath_loc != "":
+		#file_des = open(listobj.filepath_des, 'r')
+		#file_loc = open(listobj.filepath_loc, 'r')
+	file_des = ReadANSIFile(listobj.filepath_des)
+	#print_debug(file_des)
+	file_loc = ReadANSIFile(listobj.filepath_loc)
+
+	#var Lines = file_des.readlines()
+	var Lines = file_des.split("\n")
+	var readstate = "TableStart"
+	var tempchar = Mtake.new()
+	var entryname = ""
+	for line in Lines:
+		line = line.strip_edges()
+		if len(line) == 0: #Empty Line
+			continue
+		if readstate == "TableStart":#Search for [Table]
+			if "[Table]" in line:
+				readstate = "TableOpen"
+				continue
+		if readstate == "TableOpen":#Search for { after [Table]
+			if line == "{":
+				readstate = "SearchTableEntry"
+				continue
+		if readstate == "SearchTableEntry":#Search for [
+			if line[0] == "[":
+				line = line.split("[")[1]
+				line = line.split("]")[0]
+				entryname = line
+				readstate = "TableEntryOpen"
+				continue
+		if readstate == "SearchTableEntry":#Search for last }
+			if line[0] == "}":
+				readstate = "TableClosed"
+				break#End
+		if readstate == "TableEntryOpen":
+			if line == "{":
+				readstate = "TableEntryData"
+				continue
+		if readstate == "TableEntryData":
+			if "//" in line:
+				tempchar.Comment_des = line.split("/")[2]
+			if "Key = " in line:
+				tempchar.Key = int(line.split(" ")[2])
+			if "Person = " in line:
+				tempchar.Person = int(line.split(" ")[2])
+			if "Wav = " in line:
+				tempchar.Wav = line.split("\"")[1]
+				if len(line.split("\"")[1]) > 0:
+					tempchar.WavPath = aquanox_basepath + "sfx/speech/" + locale + "/" + line.split("\"")[1] + ".ogg"
+					tempchar.WavPath = tempchar.WavPath.replace("\\", "/")
+			if "Mood = " in line:
+				tempchar.Mood = int(line.split(" ")[2])
+			if line == "}":
+				listobj.table[entryname] = tempchar
+				tempchar = Mtake.new()
 				entryname = ""
 				readstate = "SearchTableEntry"
 				continue
