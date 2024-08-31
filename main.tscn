@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://dlyb8yxohh1wu"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_8vj0j"]
+[ext_resource type="PackedScene" uid="uid://crne6xsvchts3" path="res://file_operation.tscn" id="2_grsrd"]
+[ext_resource type="PackedScene" uid="uid://dlny3hfxx4ej0" path="res://hud.tscn" id="3_37gi8"]
+[ext_resource type="PackedScene" uid="uid://bqcxot0jq32i7" path="res://stake_hud.tscn" id="4_a8sqc"]
+[ext_resource type="PackedScene" uid="uid://vnuo5vvvyk56" path="res://dialog_hud.tscn" id="5_uaw1b"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_8vj0j")
+
+[node name="BGColor" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 1, 1)
+
+[node name="FileOperation" parent="." instance=ExtResource("2_grsrd")]
+
+[node name="StartHUD" parent="." instance=ExtResource("3_37gi8")]
+
+[node name="DialogSound" type="AudioStreamPlayer" parent="."]
+volume_db = -15.953
+
+[node name="RoomSound" type="AudioStreamPlayer" parent="."]
+
+[node name="MainHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tabs" type="TabContainer" parent="MainHUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -630.0
+offset_top = -360.0
+offset_right = 630.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+tab_alignment = 1
+current_tab = 0
+
+[node name="stake_hud" parent="MainHUD/Tabs" instance=ExtResource("4_a8sqc")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="dialog_hud" parent="MainHUD/Tabs" instance=ExtResource("5_uaw1b")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[connection signal="start_processing" from="StartHUD" to="." method="_on_hud_start_processing"]

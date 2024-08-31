@@ -1,0 +1,63 @@
+[gd_scene load_steps=14 format=3 uid="uid://ovvpwp13m6o5"]
+
+[ext_resource type="Script" path="res://dialog_preview.gd" id="1_bmgh1"]
+[ext_resource type="AudioStream" uid="uid://dbs2klvixy4gi" path="res://gui/gui_station_atacama/sound/bedlam.wav" id="2_bjusa"]
+[ext_resource type="AudioStream" uid="uid://dtc65c5rflr5x" path="res://gui/gui_station_atacama/sound/plazaelninho.wav" id="3_ibtcv"]
+[ext_resource type="AudioStream" uid="uid://bnaqcp4wo73of" path="res://gui/gui_station_atacama/sound/salpetretavern.wav" id="4_lddfu"]
+[ext_resource type="AudioStream" uid="uid://dxqugfcgpvg8y" path="res://gui/gui_station_eltopo/sound/eltopooffice.wav" id="5_f4fn1"]
+[ext_resource type="AudioStream" uid="uid://cyx6htcsox7m8" path="res://gui/gui_station_eltopo/sound/thalasso.wav" id="6_kl1sw"]
+[ext_resource type="AudioStream" uid="uid://btomhpb5bqt5n" path="res://gui/gui_station_harvester/sound/bridge.wav" id="7_wswrq"]
+[ext_resource type="AudioStream" uid="uid://cmwllhtvoenfo" path="res://gui/gui_station_harvester/sound/crewsquarters.wav" id="8_wi7n0"]
+[ext_resource type="AudioStream" uid="uid://dpvt0rvlp0t5h" path="res://gui/gui_station_harvester/sound/mess.wav" id="9_vab24"]
+[ext_resource type="AudioStream" uid="uid://n2vqvcye2qwj" path="res://gui/gui_station_harvester/sound/trashsluice.wav" id="10_nj0rq"]
+[ext_resource type="AudioStream" uid="uid://6krh322xh3hs" path="res://gui/gui_station_neopolis/sound/concordia.wav" id="11_lyyix"]
+[ext_resource type="AudioStream" uid="uid://ctwkc7f8u61ml" path="res://gui/gui_station_neopolis/sound/museumofmodern.wav" id="12_mbchq"]
+[ext_resource type="AudioStream" uid="uid://dapq7tpsi7jeu" path="res://gui/gui_station_neopolis/sound/neopolisarms.wav" id="13_4jnck"]
+
+[node name="dialog_preview" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_bmgh1")
+
+[node name="DialogAudio" type="AudioStreamPlayer" parent="."]
+
+[node name="DialogRoomAudio" type="AudioStreamPlayer" parent="."]
+
+[node name="atacama_bedlam" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_bjusa")
+volume_db = -6.978
+
+[node name="atacama_plazaelninho" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ibtcv")
+
+[node name="atacama_salpetretavern" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_lddfu")
+
+[node name="eltopo_eltopooffice" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_f4fn1")
+
+[node name="eltopo_thalasso" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_kl1sw")
+
+[node name="harvester_bridge" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wswrq")
+
+[node name="harvester_crewsquarters" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_wi7n0")
+
+[node name="harvester_mess" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_vab24")
+
+[node name="harvester_trashsluice" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_nj0rq")
+
+[node name="neopolis_concordia" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_lyyix")
+
+[node name="neopolis_museumofmodern" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_mbchq")
+
+[node name="neopolis_neopolisarms" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_4jnck")

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://016qas4slk4a"
+path="res://.godot/imported/bridge - Kopie.wav-31b45fc5daef5b2f570bdd8aa00f6058.sample"
+
+[deps]
+
+source_file="res://gui/gui_station_harvester/sound/bridge - Kopie.wav"
+dest_files=["res://.godot/imported/bridge - Kopie.wav-31b45fc5daef5b2f570bdd8aa00f6058.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
