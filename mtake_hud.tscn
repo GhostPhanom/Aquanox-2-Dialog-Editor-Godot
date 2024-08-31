@@ -1,0 +1,125 @@
+[gd_scene load_steps=2 format=3 uid="uid://pdy2co223eku"]
+
+[ext_resource type="Script" path="res://mtake_hud.gd" id="1_ugrvo"]
+
+[node name="mtake_hud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ugrvo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -300.0
+offset_right = 600.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Missionlist"
+horizontal_alignment = 1
+
+[node name="MissionButton" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "MTake Comment_des"
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Key"
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Person Key"
+
+[node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Person Name"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Dialog_Comment_des" type="LineEdit" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+placeholder_text = "Comment_des"
+
+[node name="MtakeKey" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "aaaaa"
+
+[node name="PersonKey" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "aaaa"
+
+[node name="PersonName" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "aaa"
+
+[node name="PlayAudio" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Dialog Sound"
+
+[node name="StopAudio" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Stop Dialog Sound"
+
+[node name="ExportAllFiles" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "EXPORT ALL FILES"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Mtakelist"
+horizontal_alignment = 1
+
+[node name="MtakeList" type="ItemList" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+item_count = 2
+item_0/text = "test"
+item_1/text = "test"
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Textfield"
+wrap_mode = 1
+
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_room_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_mission_button_item_selected"]
+[connection signal="text_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des" to="." method="_on_dialog_comment_des_text_changed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayAudio" to="." method="_on_play_audio_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/StopAudio" to="." method="_on_stop_audio_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/ExportAllFiles" to="." method="_on_export_all_files_pressed"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer2/MtakeList" to="." method="_on_stake_list_item_selected"]
+[connection signal="text_changed" from="HBoxContainer/VBoxContainer2/TextEdit" to="." method="_on_text_edit_text_changed"]

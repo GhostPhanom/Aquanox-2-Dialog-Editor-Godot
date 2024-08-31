@@ -1,7 +1,7 @@
 extends Control
 
 var currentroom = null
-@export var master_volume_moifier = -12.0
+@export var master_volume_moifier = -18.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,6 +20,12 @@ func LoadDialogTree(stakeWAV):
 			$DialogAudio.play()
 		while($DialogAudio.playing):
 			await get_tree().create_timer(0,03).timeout
+
+func LoadSingleSound(stakeWAV):
+	if FileAccess.file_exists(stakeWAV):
+		$DialogAudio.stream = AudioStreamOggVorbis.load_from_file(stakeWAV)
+		$DialogAudio.volume_db = master_volume_moifier
+		$DialogAudio.play()
 
 func LoadDialogRoomTree(stakeWAV, roomWAV):
 	#print(roomWAV)
