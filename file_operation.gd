@@ -1,8 +1,8 @@
 extends Node
 
-var aquanox_basepath = "C:/Games/AquaNox 2 Revelation/Aquanox-2-Dialog-Editor/"#Attention windows path but used/ instead of \
+var aquanox_basepath = "C:/Games/AquaNox 2 Revelation/aq2/"#Attention windows path but used/ instead of \
 var locale = "de"
-var export_basepath = "C:/Games/AquaNox 2 Revelation/Aquanox-2-Dialog-Editor/export/"
+var export_basepath = "C:/Games/AquaNox 2 Revelation/aq2/export/"
 
 var charlist
 var roomlist

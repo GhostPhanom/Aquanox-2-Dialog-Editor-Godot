@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dlyb8yxohh1wu"]
+[gd_scene load_steps=8 format=3 uid="uid://dlyb8yxohh1wu"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_8vj0j"]
 [ext_resource type="PackedScene" uid="uid://crne6xsvchts3" path="res://file_operation.tscn" id="2_grsrd"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bqcxot0jq32i7" path="res://stake_hud.tscn" id="4_a8sqc"]
 [ext_resource type="PackedScene" uid="uid://vnuo5vvvyk56" path="res://dialog_hud.tscn" id="5_uaw1b"]
 [ext_resource type="PackedScene" uid="uid://pdy2co223eku" path="res://mtake_hud.tscn" id="6_iefi6"]
+[ext_resource type="PackedScene" uid="uid://f8x1u31bp3vw" path="res://person_hud.tscn" id="7_bm584"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_8vj0j")
@@ -70,5 +71,10 @@ metadata/_tab_index = 1
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
+
+[node name="person_hud" parent="MainHUD/Tabs" instance=ExtResource("7_bm584")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
 
 [connection signal="start_processing" from="StartHUD" to="." method="_on_hud_start_processing"]
