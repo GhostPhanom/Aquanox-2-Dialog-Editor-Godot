@@ -69,6 +69,7 @@ func UpdateStakeList(index):
 	current_mtake_dict = {}
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MtakeKey.text = "-1"
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonKey.text = "-1"
+	$HBoxContainer/VBoxContainer/NewPersonKey.text = "-1"
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonName.text = ""
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des.text = ""
 	var mtakelist = main_data_object.mtakedict[missionlist[index]].table
@@ -97,6 +98,7 @@ func _on_stake_list_item_selected(index: int) -> void:
 	current_mtake_object = current_mtake_list[index]
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/MtakeKey.text = str(current_mtake_object.Key)
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonKey.text = str(current_mtake_object.Person)
+	$HBoxContainer/VBoxContainer/NewPersonKey.text = str(current_mtake_object.Person)
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonName.text = main_data_object.charlist.GetObjectwithKey(current_mtake_object.Person).Name
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des.text = current_mtake_object.Comment_des
 	$HBoxContainer/VBoxContainer2/TextEdit.text = current_mtake_object.Text
@@ -125,3 +127,14 @@ func _on_stop_audio_pressed() -> void:
 
 func _on_export_all_files_pressed() -> void:
 	main_data_object.ExportFiles()
+
+func _on_update_person_key_pressed() -> void:
+	var new_person = int($HBoxContainer/VBoxContainer/NewPersonKey.text)
+	var person_entry = main_data_object.charlist.GetObjectwithKey(new_person)
+	if person_entry != null:
+		current_mtake_object.Person = new_person
+		$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonKey.text = str(current_mtake_object.Person)
+		$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonName.text = main_data_object.charlist.GetObjectwithKey(current_mtake_object.Person).Name
+	else:
+		$HBoxContainer/VBoxContainer/NewPersonKey.text = str(current_mtake_object.Person)
+		

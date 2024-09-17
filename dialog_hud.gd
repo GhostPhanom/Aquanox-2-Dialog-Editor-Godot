@@ -76,11 +76,18 @@ func FetchDialogData(Key, index):
 	base_person2 = current_person2
 	var person1 = main_data_object.charlist.GetObjectwithKey(current_person1)
 	var person2 = main_data_object.charlist.GetObjectwithKey(current_person2)
+	var second_person_found = false
+	if current_person2 != -1:
+		second_person_found = true
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des.text = current_dialog_list[index].Comment_des
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Person1Key.text = str(person1.Key)
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Person1Name.text = str(person1.Name)
-	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Person2Key.text = str(person2.Key)
-	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Person2Name.text = str(person2.Name)
+	if second_person_found == true:
+		$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Person2Key.text = str(person2.Key)
+		$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Person2Name.text = str(person2.Name)
+	else:
+		$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Person2Key.text = str(-1)
+		$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Person2Name.text = "No 2nd Person found"
 	current_dialog_object = current_dialog_list[index]
 	ResetStakeList()
 	

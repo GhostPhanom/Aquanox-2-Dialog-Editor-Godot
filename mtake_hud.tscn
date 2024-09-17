@@ -52,13 +52,13 @@ text = "MTake Comment_des"
 layout_mode = 2
 text = "Key"
 
-[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Person Key"
-
 [node name="Label4" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Person Name"
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Person Key"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -73,13 +73,21 @@ placeholder_text = "Comment_des"
 layout_mode = 2
 text = "aaaaa"
 
+[node name="PersonName" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "aaa"
+
 [node name="PersonKey" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 text = "aaaa"
 
-[node name="PersonName" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="NewPersonKey" type="LineEdit" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "aaa"
+placeholder_text = "New Person Key"
+
+[node name="UpdatePersonKey" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Update Person Key"
 
 [node name="PlayAudio" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -115,9 +123,10 @@ size_flags_vertical = 3
 placeholder_text = "Textfield"
 wrap_mode = 1
 
-[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_mission_button_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_room_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_mission_button_item_selected"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des" to="." method="_on_dialog_comment_des_text_changed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/UpdatePersonKey" to="." method="_on_update_person_key_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayAudio" to="." method="_on_play_audio_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/StopAudio" to="." method="_on_stop_audio_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ExportAllFiles" to="." method="_on_export_all_files_pressed"]

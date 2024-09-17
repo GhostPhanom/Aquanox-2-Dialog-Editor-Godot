@@ -333,6 +333,10 @@ func ParseCharacters(listobj):
 				tempchar.Sex = line.split("\"")[1]
 			if line == "}":
 				listobj.table[entryname] = tempchar
+				if tempchar.ImageElfPath == "-1":
+					tempchar.ImageElfPath = listobj.aquanox_basepath + "no_file_path"
+				if tempchar.ImageMood0Path == "-1":
+					tempchar.ImageMood0Path = listobj.aquanox_basepath + "no_file_path"
 				tempchar = Character.new()
 				entryname = ""
 				readstate = "SearchTableEntry"
@@ -401,6 +405,21 @@ func ParseCharacters(listobj):
 				tempcomment = ""
 				readstate = "SearchTableEntry"
 				continue
+
+func AddNewCharacter(listobj, lasttablekey, lastkey):
+	var tempchar = Character.new()
+	tempchar.Key = lastkey + 1
+	tempchar.ImageElf = ""
+	tempchar.ImageElfPath = "-1"
+	tempchar.ImageMood0 = ""
+	tempchar.ImageMood0Path = "-1"
+	tempchar.Sex = "male"
+	tempchar.Name = "New Entry"
+	tempchar.ShortName = "New Short Entry"
+	tempchar.Comment_des = "NO .DES COMMENT"
+	tempchar.Comment_loc = "NO .LOC COMMENT"
+	listobj.table["Person" + str(lasttablekey + 1)] = tempchar
+	
 
 class Room_List extends FileDataTypes:
 	var filepath_des = ""

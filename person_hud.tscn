@@ -77,18 +77,65 @@ placeholder_text = "New Person Short Name"
 layout_mode = 2
 text = "Update Person Name"
 
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Filelist"
+horizontal_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ImageElf(Mission)"
+
+[node name="ImageElf" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "aaaa"
+
+[node name="NewImageElf" type="LineEdit" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Add Path if Person is used during MIssions"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ImageMood0(Dialog)"
+
+[node name="ImageMood0" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "aaaa"
+
+[node name="NewImageMood0" type="LineEdit" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Add Path if Person is used between Missions in Dialogs"
+
+[node name="UpdateImagePaths" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Update Image Paths"
+
 [node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Modify Personlist Length"
 horizontal_alignment = 1
 
-[node name="Button2" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="NewEntry" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "New Personlist Entry"
 
-[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="DeleteLastEntry" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Delete Last Personlist Entry"
+text = "Delete Last Personlist Entry(Entry must be selected)"
+
+[node name="PreviewPictures" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reload Display Image Preview"
 
 [node name="ExportAllFiles" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -98,6 +145,27 @@ text = "EXPORT ALL FILES"
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="ElfPreview" type="TextureRect" parent="HBoxContainer/VBoxContainer2"]
+z_index = 1
+layout_mode = 2
+stretch_mode = 2
+
+[node name="Mood0Preview" type="TextureRect" parent="HBoxContainer/VBoxContainer2"]
+z_index = 1
+layout_mode = 2
+stretch_mode = 2
+
+[node name="Mood0BG" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 350.0
+color = Color(0.344076, 0.344076, 0.344076, 1)
+
 [connection signal="value_changed" from="HBoxContainer/VBoxContainer/SpinBox" to="." method="_on_spin_box_value_changed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/UpdatePersonName" to="." method="_on_update_person_name_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/UpdateImagePaths" to="." method="_on_update_image_paths_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/NewEntry" to="." method="_on_new_entry_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/DeleteLastEntry" to="." method="_on_delete_last_entry_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/PreviewPictures" to="." method="_on_preview_pictures_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ExportAllFiles" to="." method="_on_export_all_files_pressed"]

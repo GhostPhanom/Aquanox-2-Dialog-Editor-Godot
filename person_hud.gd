@@ -40,6 +40,9 @@ func UpdateListLength():
 	
 
 func ShowListEntry(Key):
+	#$Mood0BG.visible = false
+	#$HBoxContainer/VBoxContainer2/ElfPreview.visible = false
+	#$HBoxContainer/VBoxContainer2/Mood0Preview.visible = false
 	currentperson = main_data_object.charlist.GetObjectwithKey(Key)
 	if currentperson == null:#If Key does not exists it bumps the counter one up
 		var text_object = $HBoxContainer/VBoxContainer/SpinBox.get_line_edit()
@@ -58,14 +61,39 @@ func ShowListEntry(Key):
 		else:
 			$HBoxContainer/VBoxContainer/HBoxContainer2/PersonShortName.text = ""
 			$HBoxContainer/VBoxContainer/NewPersonShortName.text = ""
-	
+		if currentperson.ImageElf != null:
+			$HBoxContainer/VBoxContainer/HBoxContainer3/ImageElf.text = currentperson.ImageElf
+			$HBoxContainer/VBoxContainer/NewImageElf.text = currentperson.ImageElf
+		else:
+			$HBoxContainer/VBoxContainer/HBoxContainer3/ImageElf.text = ""
+			$HBoxContainer/VBoxContainer/NewImageElf.text = ""
+		if currentperson.ImageMood0 != null:
+			$HBoxContainer/VBoxContainer/HBoxContainer4/ImageMood0.text = currentperson.ImageMood0
+			$HBoxContainer/VBoxContainer/NewImageMood0.text = currentperson.ImageMood0
+		else:
+			$HBoxContainer/VBoxContainer/HBoxContainer4/ImageMood0.text = ""
+			$HBoxContainer/VBoxContainer/NewImageMood0.text = ""
+		SetPreviewPictures()
 
+func _on_update_image_paths_pressed() -> void:
+	currentperson.ImageElf = $HBoxContainer/VBoxContainer/NewImageElf.text
+	if currentperson.ImageElf == "":
+		currentperson.ImageElfPath = main_data_object.charlist.aquanox_basepath + "no_file_path"
+	else:
+		currentperson.ImageElfPath = main_data_object.charlist.aquanox_basepath + currentperson.ImageElf
+	currentperson.ImageMood0 = $HBoxContainer/VBoxContainer/NewImageMood0.text
+	if currentperson.ImageMood0 == "":
+		currentperson.ImageMood0Path = main_data_object.charlist.aquanox_basepath + "no_file_path"
+	else:
+		currentperson.ImageMood0Path = main_data_object.charlist.aquanox_basepath + currentperson.ImageMood0
+	ShowListEntry(currentspincounter)
 
 func _on_update_person_name_pressed() -> void:
 	if $HBoxContainer/VBoxContainer/NewPersonName.text != "":
 		currentperson.Name = $HBoxContainer/VBoxContainer/NewPersonName.text
 	if $HBoxContainer/VBoxContainer/NewPersonShortName.text != "":
 		currentperson.ShortName = $HBoxContainer/VBoxContainer/NewPersonShortName.text
+	ShowListEntry(currentspincounter)
 
 
 func _on_export_all_files_pressed() -> void:
@@ -90,3 +118,42 @@ func PersonNumberSelectionSanetize(input):
 
 func _on_spin_box_value_changed(value: float) -> void:
 	PersonNumberSelectionSanetize(int(value))
+
+
+func _on_new_entry_pressed() -> void:
+	main_data_object.AddNewCharacter(main_data_object.charlist, maxpersontablelist, maxpersonlist)
+	UpdateListLength()
+
+
+func _on_delete_last_entry_pressed() -> void:
+	if currentperson == main_data_object.charlist.GetObjectwithKey(maxpersonlist):
+		main_data_object.charlist.table.erase("Person" + str(maxpersontablelist))
+		UpdateListLength()
+		ShowListEntry(1)
+	else:
+		print("Current Entry not last entry, will not be deleted")
+
+func _on_preview_pictures_pressed() -> void:
+	SetPreviewPictures()
+
+func SetPreviewPictures():
+	if FileAccess.file_exists(currentperson.ImageElfPath):
+		var image = Image.load_from_file(currentperson.ImageElfPath)
+		var texture = ImageTexture.create_from_image(image)
+		$HBoxContainer/VBoxContainer2/ElfPreview.texture = texture
+		$HBoxContainer/VBoxContainer2/ElfPreview.visible = true
+	else:
+		$HBoxContainer/VBoxContainer2/ElfPreview.visible = false
+		
+	if FileAccess.file_exists(currentperson.ImageMood0Path):
+		var image = Image.load_from_file(currentperson.ImageMood0Path)
+		var texture = ImageTexture.create_from_image(image)
+		$HBoxContainer/VBoxContainer2/Mood0Preview.texture = texture
+		$HBoxContainer/VBoxContainer2/Mood0Preview.visible = true
+		await get_tree().create_timer(0,03).timeout
+		var vector = $HBoxContainer/VBoxContainer2/Mood0Preview.get_screen_position()
+		$Mood0BG.set_position(Vector2(vector[0] - 5, vector[1] - 31))
+		$Mood0BG.visible = true
+	else:
+		$HBoxContainer/VBoxContainer2/Mood0Preview.visible = false
+		$Mood0BG.visible = false
