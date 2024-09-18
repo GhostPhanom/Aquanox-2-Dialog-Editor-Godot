@@ -26,6 +26,8 @@ func _on_hud_start_processing() -> void:
 	$MainHUD/Tabs/mtake_hud.Initialize()
 	$MainHUD/Tabs/person_hud.main_data_object = $FileOperation
 	$MainHUD/Tabs/person_hud.Initialize()
+	$MainHUD/Tabs/music_hud.main_data_object = $FileOperation
+	$MainHUD/Tabs/music_hud.Initialize()
 
 func PlayDialog(dialogid):
 	var stake_list = $FileOperation.stakelist.GetDialogeStakeEntrys(dialogid)
