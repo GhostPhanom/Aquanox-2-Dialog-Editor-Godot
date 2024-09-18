@@ -132,6 +132,7 @@ func _on_text_edit_text_changed() -> void:
 func _on_stake_list_item_selected(index: int) -> void:
 	current_stake_object = current_stake_list[index]
 	$HBoxContainer/VBoxContainer2/TextEdit.text = current_stake_object.Text
+	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/StakeKey.text = str(current_stake_object.Key)
 
 
 func _on_dialog_comment_des_text_changed(new_text: String) -> void:

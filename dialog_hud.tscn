@@ -72,6 +72,10 @@ text = "Person2 Key"
 layout_mode = 2
 text = "Person2 Name"
 
+[node name="Label6" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Stake Key"
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -96,6 +100,10 @@ text = "aaa"
 [node name="Person2Name" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 text = "aaaa"
+
+[node name="StakeKey" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "-1"
 
 [node name="UseRoomSound" type="CheckBox" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2

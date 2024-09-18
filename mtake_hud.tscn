@@ -97,6 +97,10 @@ text = "Play Dialog Sound"
 layout_mode = 2
 text = "Stop Dialog Sound"
 
+[node name="PrintAllMtakeToConsole" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Print All Mtake To Console"
+
 [node name="ExportAllFiles" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "EXPORT ALL FILES"
@@ -129,6 +133,7 @@ wrap_mode = 1
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/UpdatePersonKey" to="." method="_on_update_person_key_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayAudio" to="." method="_on_play_audio_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/StopAudio" to="." method="_on_stop_audio_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/PrintAllMtakeToConsole" to="." method="_on_print_all_mtake_to_console_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ExportAllFiles" to="." method="_on_export_all_files_pressed"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer2/MtakeList" to="." method="_on_stake_list_item_selected"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer2/TextEdit" to="." method="_on_text_edit_text_changed"]

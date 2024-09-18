@@ -77,15 +77,28 @@ func UpdateStakeList(index):
 	for key in mtakelist.keys():
 		print(key)
 		print(mtakelist[key].Person)
+		var override_character_filter = 48################################IMPORTANT FILTER##########################################
+		if override_character_filter > -1:
+			$HBoxContainer/VBoxContainer/Label.text = "Missionlist !!! Filter in Code enabled for Person:" + str(override_character_filter)
 		
-		var tempstring = str(counter) + " "
-		tempstring += main_data_object.charlist.GetObjectwithKey(mtakelist[key].Person).Name + ": "
-		var shorttext = mtakelist[key].Text.left(50)
-		tempstring += shorttext
-		current_mtake_dict[tempstring] = mtakelist[key]
-		current_mtake_list.append(mtakelist[key])
-		$HBoxContainer/VBoxContainer2/MtakeList.add_item(tempstring)
-		counter += 1
+		if override_character_filter == -1:
+			var tempstring = str(counter) + " "
+			tempstring += main_data_object.charlist.GetObjectwithKey(mtakelist[key].Person).Name + ": "
+			var shorttext = mtakelist[key].Text.left(50)
+			tempstring += shorttext
+			current_mtake_dict[tempstring] = mtakelist[key]
+			current_mtake_list.append(mtakelist[key])
+			$HBoxContainer/VBoxContainer2/MtakeList.add_item(tempstring)
+			counter += 1
+		elif mtakelist[key].Person == override_character_filter:
+			var tempstring = str(counter) + " "
+			tempstring += main_data_object.charlist.GetObjectwithKey(mtakelist[key].Person).Name + ": "
+			var shorttext = mtakelist[key].Text.left(50)
+			tempstring += shorttext
+			current_mtake_dict[tempstring] = mtakelist[key]
+			current_mtake_list.append(mtakelist[key])
+			$HBoxContainer/VBoxContainer2/MtakeList.add_item(tempstring)
+			counter += 1
 	
 func _on_room_button_item_selected(index: int) -> void:
 	UpdateStakeList(index)
@@ -137,4 +150,15 @@ func _on_update_person_key_pressed() -> void:
 		$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonName.text = main_data_object.charlist.GetObjectwithKey(current_mtake_object.Person).Name
 	else:
 		$HBoxContainer/VBoxContainer/NewPersonKey.text = str(current_mtake_object.Person)
+		
+
+
+func _on_print_all_mtake_to_console_pressed() -> void:
+	print("###########Export Mtake############")
+	for entry in current_mtake_list:
+		var infostring = "Person: " + main_data_object.charlist.GetObjectwithKey(entry.Person).Name + " Key: " + str(entry.Key)
+		if entry.Comment_des != "NO .DES COMMENT":
+			infostring = infostring + " Comment: " + entry.Comment_des
+		print(infostring)
+		print(entry.Text)
 		
