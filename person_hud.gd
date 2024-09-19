@@ -157,3 +157,49 @@ func SetPreviewPictures():
 	else:
 		$HBoxContainer/VBoxContainer2/Mood0Preview.visible = false
 		$Mood0BG.visible = false
+
+
+func _on_print_all_m_take_pressed() -> void:
+	var counter = 0
+	var personname = currentperson.Name
+	var missionname_printed = false
+	for mission in main_data_object.mtakedict.keys():
+		missionname_printed = false
+		for mtake in main_data_object.mtakedict[mission].table.keys():
+			var take = main_data_object.mtakedict[mission].table[mtake]
+			if take.Person == currentperson.Key:
+				if missionname_printed == false:
+					print("Mission: " + mission)
+					missionname_printed = true
+				print(currentperson.Name + ": " + take.Text)
+				counter += 1
+	print("Number of lines: " + str(counter))
+
+
+func _on_print_all_s_take_pressed() -> void:
+	var counter = 0
+	var personname = currentperson.Name
+	var stakelist_temp = []
+	var roomname_printed = false
+	var dialogname_printed = false
+	for stake in main_data_object.stakelist.table.keys():
+		if main_data_object.stakelist.table[stake].Person == currentperson.Key:
+			stakelist_temp = stakelist_temp + [main_data_object.stakelist.table[stake]]
+	for roomname in main_data_object.roomlist.table.keys():
+		var room = main_data_object.roomlist.table[roomname]
+		roomname_printed = false
+		for dialogname in main_data_object.sdialoglist.table.keys():
+			var dialog = main_data_object.sdialoglist.table[dialogname]
+			dialogname_printed = false
+			if room.Key == dialog.Room:
+				for take in stakelist_temp:
+					if dialog.Key == take.Dialog:
+						if roomname_printed == false:
+							print("Room: " + room.Comment_des)
+							roomname_printed = true
+						if dialogname_printed == false:
+							print("Dialog: " + dialog.Comment_des)
+							dialogname_printed = true
+						print(personname + ": " + take.Text)
+						counter += 1
+	print("Counter: " + str(counter))

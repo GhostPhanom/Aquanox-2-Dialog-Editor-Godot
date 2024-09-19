@@ -22,8 +22,9 @@ func Initialize():
 		var file = FileAccess.open(metadata_path, FileAccess.READ)
 		var content = file.get_as_text()
 		metadata_json.parse(content)
-		print(metadata_json)
-		print(metadata_json.data)
+		$HBoxContainer/VBoxContainer/Label.text = "Nextindex: " + str(metadata_json.data["nextindex"])
+		#print(metadata_json)
+		#print(metadata_json.data)
 
 func _on_button_pressed() -> void:
 	$HBoxContainer/FileDialog.set_current_path(music_path)
@@ -54,6 +55,7 @@ func _on_file_dialog_file_selected(path: String) -> void:
 		var file = FileAccess.open(metadata_path, FileAccess.WRITE)
 		file.store_string(metadata_json.stringify(metadata_json.data, "  "))
 		file.close()
+		$HBoxContainer/VBoxContainer/Label.text = "Nextindex: " + str(metadata_json.data["nextindex"])
 	
 func CreateSAMFile(path, music_filename):
 	var tempstring = "\n[SampleInfo]\n{\n\n"
@@ -65,8 +67,8 @@ func CreateSAMFile(path, music_filename):
 	tempstring = tempstring + "	cnt = " + str(metadata_json.data["template_cnt"]) + "\n"
 	tempstring = tempstring + "	minr = " + str(metadata_json.data["template_minr"]) + ".0" + "\n"
 	tempstring = tempstring + "	maxr = " + str(metadata_json.data["template_maxr"]) + ".0" + "\n\n}\n"
-	print(tempstring)
-	print(path)
+	#print(tempstring)
+	#print(path)
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(tempstring)
 	file.close()
