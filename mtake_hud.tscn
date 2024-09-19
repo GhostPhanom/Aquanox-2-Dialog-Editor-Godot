@@ -127,8 +127,8 @@ size_flags_vertical = 3
 placeholder_text = "Textfield"
 wrap_mode = 1
 
-[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_room_button_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_mission_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_room_button_item_selected"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des" to="." method="_on_dialog_comment_des_text_changed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/UpdatePersonKey" to="." method="_on_update_person_key_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayAudio" to="." method="_on_play_audio_pressed"]

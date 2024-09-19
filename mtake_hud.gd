@@ -15,15 +15,19 @@ var missionlist = [
 	"mtake_1h3",
 	"mtake_1h4",
 	"mtake_1h5",
+	"mtake_1n1",
+	"mtake_1n2",
 	"mtake_2b1",
 	"mtake_2h1",
 	"mtake_2h2",
+	"mtake_2h3",
 	"mtake_3b1",
 	"mtake_3h1",
 	"mtake_3h2",
 	"mtake_3h3",
 	"mtake_3h4",
 	"mtake_3h5",
+	"mtake_3n1",
 	"mtake_3n2",
 	"mtake_3n3",
 	"mtake_4h1",
@@ -77,7 +81,7 @@ func UpdateStakeList(index):
 	for key in mtakelist.keys():
 		print(key)
 		print(mtakelist[key].Person)
-		var override_character_filter = 48################################IMPORTANT FILTER##########################################
+		var override_character_filter = -1################################IMPORTANT FILTER##########################################
 		if override_character_filter > -1:
 			$HBoxContainer/VBoxContainer/Label.text = "Missionlist !!! Filter in Code enabled for Person:" + str(override_character_filter)
 		
