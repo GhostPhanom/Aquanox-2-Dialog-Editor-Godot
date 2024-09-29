@@ -133,7 +133,7 @@ text = "Generate Preview Sound"
 layout_mode = 2
 text = "Play Preview Sound"
 
-[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="PlayRefernceSound" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Play Reference Sound for loudness"
 
@@ -175,6 +175,7 @@ wrap_mode = 1
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ExportAllFiles" to="." method="_on_export_all_files_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/GeneratePreviewSound" to="." method="_on_generate_preview_sound_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayPreviewSound" to="." method="_on_play_preview_sound_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayRefernceSound" to="." method="_on_play_refernce_sound_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/OverrideMainSound" to="." method="_on_override_main_sound_pressed"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer2/MtakeList" to="." method="_on_stake_list_item_selected"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer2/TextEdit" to="." method="_on_text_edit_text_changed"]

@@ -281,3 +281,14 @@ func _on_override_main_sound_pressed() -> void:
 			$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_hover_color", Color("00ff21"))
 			preview_sound_generated = true
 			preview_sound_volume = text_object.text
+
+
+func _on_play_refernce_sound_pressed() -> void:
+	if FileAccess.file_exists(main_data_object.audio_reference_mtake_path):
+		if is_instance_valid(current_dialog_preview_instance):
+			current_dialog_preview_instance.StopSound()
+			current_dialog_preview_instance.queue_free()
+		if current_mtake_object != null:
+			current_dialog_preview_instance = dialog_preview_scene.instantiate()
+			add_child(current_dialog_preview_instance)
+			current_dialog_preview_instance.LoadSingleSound(main_data_object.audio_reference_mtake_path)

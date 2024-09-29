@@ -4,6 +4,7 @@ var aquanox_basepath = "C:/Games/AquaNox 2 Revelation/aq2/"#Attention windows pa
 var locale = "de"
 var export_basepath = "C:/Games/AquaNox 2 Revelation/aq2/export/"
 var audio_preview_path = "D:/Programme/Godot/previewfile.ogg"
+var audio_reference_mtake_path = "D:/Programme/Godot/reference_mtake.ogg"
 
 var charlist
 var roomlist
