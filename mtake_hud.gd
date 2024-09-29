@@ -9,6 +9,9 @@ var current_mtake_object
 var dialog_preview_scene
 var current_dialog_preview_instance = null
 
+var preview_sound_generated = false
+var preview_sound_volume = ""
+
 var missionlist = [
 	"mtake_1h1",
 	"mtake_1h2",
@@ -44,6 +47,43 @@ var missionlist = [
 	"mtake_6h2",
 	"mtake_6h3",
 	"mtake_gen",
+	]
+	
+var missionnamelist = [
+	"Erste Mission",
+	"Lima 2",
+	"Dr Finch retten",
+	"Stoney vor Cingan retten",
+	"Schiffe sammeln",
+	"Intrepido",
+	"Brainfire Transport",
+	"Stoney Rennen",
+	"Dr Finch eskortieren",
+	"Chow Lung Angriff",
+	"Swedenborg",
+	"Redbeard Eldorado",
+	"Erster Fremder Angriff",
+	"Eskorte zu El Topo",
+	"El Topo Patroilie",
+	"Höllenbad",
+	"Lt. Hamlet Angriff",
+	"El Topo Piratenangriff",
+	"Stoney Buggy Mission",
+	"Freeman",
+	"Angelina Kidnapping",
+	"Schatzsuche",
+	"Lopez Versteck",
+	"Amitabs Ende",
+	"Angelinas Opfer",
+	"Neopolis Redbeard Kampf",
+	"Lunats Werft",
+	"Museeum Besuch",
+	"2ter Museeum Besuch",
+	"Greigh Konkurrenz üferfall",
+	"Nats Ende",
+	"Rache",
+	"Grabsuche",
+	"generische_sounds",
 	]
 
 
@@ -119,6 +159,14 @@ func _on_stake_list_item_selected(index: int) -> void:
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonName.text = main_data_object.charlist.GetObjectwithKey(current_mtake_object.Person).Name
 	$HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des.text = current_mtake_object.Comment_des
 	$HBoxContainer/VBoxContainer2/TextEdit.text = current_mtake_object.Text
+	$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_color", Color("ffffff"))
+	$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_focus_color", Color("ffffff"))
+	$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_hover_color", Color("ffffff"))
+	$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_color", Color("ffffff"))
+	$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_focus_color", Color("ffffff"))
+	$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_hover_color", Color("ffffff"))
+	preview_sound_generated = false
+	
 
 func UpdateMtakeEntryData():
 	if current_mtake_object != null:
@@ -166,3 +214,70 @@ func _on_print_all_mtake_to_console_pressed() -> void:
 		print(infostring)
 		print(entry.Text)
 		
+
+
+func _on_generate_preview_sound_pressed() -> void:
+	GeneratePreviewSound()
+
+
+
+func GeneratePreviewSound():
+	var text_object = $HBoxContainer/VBoxContainer/HBoxContainer2/SoundVolume.get_line_edit()
+	var soundvolume = float(text_object.text)
+	if current_mtake_object != null:
+		var successful = main_data_object.ConvertAudioFile(current_mtake_object.WavPath, soundvolume, false)
+		if successful == false:
+			$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_color", Color("ff0000"))
+			$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_focus_color", Color("ff0000"))
+			$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_hover_color", Color("ff0000"))
+		elif successful == true:
+			$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_color", Color("00ff21"))
+			$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_focus_color", Color("00ff21"))
+			$HBoxContainer/VBoxContainer/GeneratePreviewSound.add_theme_color_override("font_hover_color", Color("00ff21"))
+			preview_sound_generated = true
+			preview_sound_volume = text_object.text
+
+
+func _on_play_preview_sound_pressed() -> void:
+	var text_object = $HBoxContainer/VBoxContainer/HBoxContainer2/SoundVolume.get_line_edit()
+	if is_instance_valid(current_dialog_preview_instance):
+		current_dialog_preview_instance.StopSound()
+		current_dialog_preview_instance.queue_free()
+	if preview_sound_generated == false:
+		GeneratePreviewSound()
+		if preview_sound_generated == false:
+			return
+		PlayPreviewSound()
+	else:
+		if text_object.text == preview_sound_volume:
+			PlayPreviewSound()
+		else:
+			GeneratePreviewSound()
+			PlayPreviewSound()
+
+func PlayPreviewSound():
+	if FileAccess.file_exists(main_data_object.audio_preview_path):
+		if is_instance_valid(current_dialog_preview_instance):
+			current_dialog_preview_instance.StopSound()
+			current_dialog_preview_instance.queue_free()
+		if current_mtake_object != null:
+			current_dialog_preview_instance = dialog_preview_scene.instantiate()
+			add_child(current_dialog_preview_instance)
+			current_dialog_preview_instance.LoadSingleSound(main_data_object.audio_preview_path)
+
+
+func _on_override_main_sound_pressed() -> void:
+	var text_object = $HBoxContainer/VBoxContainer/HBoxContainer2/SoundVolume.get_line_edit()
+	var soundvolume = float(text_object.text)
+	if current_mtake_object != null:
+		var successful = main_data_object.ConvertAudioFile(current_mtake_object.WavPath, soundvolume, true)
+		if successful == false:
+			$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_color", Color("ff0000"))
+			$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_focus_color", Color("ff0000"))
+			$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_hover_color", Color("ff0000"))
+		elif successful == true:
+			$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_color", Color("00ff21"))
+			$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_focus_color", Color("00ff21"))
+			$HBoxContainer/VBoxContainer/OverrideMainSound.add_theme_color_override("font_hover_color", Color("00ff21"))
+			preview_sound_generated = true
+			preview_sound_volume = text_object.text

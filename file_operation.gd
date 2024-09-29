@@ -3,6 +3,7 @@ extends Node
 var aquanox_basepath = "C:/Games/AquaNox 2 Revelation/aq2/"#Attention windows path but used/ instead of \
 var locale = "de"
 var export_basepath = "C:/Games/AquaNox 2 Revelation/aq2/export/"
+var audio_preview_path = "D:/Programme/Godot/previewfile.ogg"
 
 var charlist
 var roomlist
@@ -130,6 +131,62 @@ func ReadANSIFile(filepath):
 	#assert(false, "lel")
 	#var line_content = output[0].split("\n")
 	return(output[0])
+
+func ConvertAudioFile(filepath, targetvolume, override_source):
+	var output = []
+	var ffmpeg_path = "D:/Programme/Godot/ffmpeg/bin/ffmpeg.exe"
+	var templocation = audio_preview_path
+	var filepath_split = Array(filepath.split(" "))
+	filepath_split[0] = "\"" + filepath_split[0]
+	filepath_split[-1] = filepath_split[-1] + "\""
+	var filepath_temp_split = Array(templocation.split(" "))
+	filepath_temp_split[0] = "\"" + filepath_temp_split[0]
+	filepath_temp_split[-1] = filepath_temp_split[-1] + "\""
+	
+	targetvolume = targetvolume / 100
+	var targetvolume_string = str(targetvolume)
+	
+	if FileAccess.file_exists(filepath):
+		if FileAccess.file_exists(templocation):
+			print("File already exists:" + templocation)
+			var errorcode = DirAccess.remove_absolute(templocation)
+			if errorcode == OK:
+				print("Deleted:" + templocation)
+			else:
+				print("Could not delete:" + templocation)
+				return(false)
+		
+		var exit_code = OS.execute(
+			ffmpeg_path, 
+			[
+				"-i"
+			] + filepath_split + [
+				"-filter:a",
+				"\"volume=" + targetvolume_string + "\""
+			] + filepath_temp_split,
+			output,
+			true,#write STDERR to output
+			false#open shell; might not be necessary?
+		)
+		
+		if override_source == true:
+			var errorcode = DirAccess.remove_absolute(filepath)
+			if errorcode == OK:
+				print("Deleted:" + filepath)
+			else:
+				print("Could not delete:" + filepath)
+				return(false)
+			
+			errorcode = DirAccess.copy_absolute(templocation, filepath)
+			if errorcode == OK:
+				print("Copied:" + templocation + " to " + filepath)
+			else:
+				print("Could not copy:" + templocation + " to " + filepath)
+				return(false)
+		return true
+	else:
+		print("Could not find SourceSound")
+		return false
 
 class FilemanagerOptions:
 	var aquanox_basepath = ""

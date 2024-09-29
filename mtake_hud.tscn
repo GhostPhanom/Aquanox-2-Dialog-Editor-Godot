@@ -105,6 +105,42 @@ text = "Print All Mtake To Console"
 layout_mode = 2
 text = "EXPORT ALL FILES"
 
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Modify Current Sound"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Modify Voice Line Volume in % (110 % means 10% increase)"
+
+[node name="SoundVolume" type="SpinBox" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 5.0
+max_value = 200.0
+step = 5.0
+value = 110.0
+
+[node name="GeneratePreviewSound" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Generate Preview Sound"
+
+[node name="PlayPreviewSound" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Preview Sound"
+
+[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Reference Sound for loudness"
+
+[node name="OverrideMainSound" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "CHANGE CURRENT SOUND VOLUME (based on current %, not Preview)"
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -127,13 +163,18 @@ size_flags_vertical = 3
 placeholder_text = "Textfield"
 wrap_mode = 1
 
-[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_mission_button_item_selected"]
+[node name="SoundPreview" type="AudioStreamPlayer" parent="."]
+
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_room_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_mission_button_item_selected"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des" to="." method="_on_dialog_comment_des_text_changed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/UpdatePersonKey" to="." method="_on_update_person_key_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayAudio" to="." method="_on_play_audio_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/StopAudio" to="." method="_on_stop_audio_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PrintAllMtakeToConsole" to="." method="_on_print_all_mtake_to_console_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ExportAllFiles" to="." method="_on_export_all_files_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/GeneratePreviewSound" to="." method="_on_generate_preview_sound_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayPreviewSound" to="." method="_on_play_preview_sound_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/OverrideMainSound" to="." method="_on_override_main_sound_pressed"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer2/MtakeList" to="." method="_on_stake_list_item_selected"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer2/TextEdit" to="." method="_on_text_edit_text_changed"]
