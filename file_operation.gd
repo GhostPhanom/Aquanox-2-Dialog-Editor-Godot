@@ -53,6 +53,79 @@ var mtakefilelist = [
 
 var mtakedict = {}
 
+var missionnamelist = [
+	"Erste Mission",
+	"Lima 2",
+	"Dr Finch retten",
+	"Stoney vor Cingan retten",
+	"Schiffe sammeln",
+	"Intrepido",
+	"Brainfire Transport",
+	"Stoney Rennen",
+	"Dr Finch eskortieren",
+	"Chow Lung Angriff",
+	"Swedenborg",
+	"Redbeard Eldorado",
+	"Erster Fremder Angriff",
+	"Eskorte zu El Topo",
+	"El Topo Patroilie",
+	"Höllenbad",
+	"Lt. Hamlet Angriff",
+	"El Topo Piratenangriff",
+	"Stoney Buggy Mission",
+	"Freeman",
+	"Angelina Kidnapping",
+	"Schatzsuche",
+	"Lopez Versteck",
+	"Amitabs Ende",
+	"Angelinas Opfer",
+	"Neopolis Redbeard Kampf",
+	"Lunats Werft",
+	"Museeum Besuch",
+	"2ter Museeum Besuch",
+	"Greigh Konkurrenz üferfall",
+	"Nats Ende",
+	"Rache",
+	"Grabsuche",
+	"generische_sounds",
+	]
+
+var missioninfolist = [
+	["mtake_1h1", "Erste Mission","Aufgabe:~Notruf von Hank Bellows verfolgen.~Navigationspunkte anfahren.~Den Canyon durchsteuern."],
+	["mtake_1h2","Lima 2","Aufgabe:~Neo-Yuppies bei Lima II ausschalten.~Funkanweisungen von Amitab folgen.~~Taktischer Hinweis:~Stoney Fox und May Ling passen auf!"],
+	["mtake_1h3","Dr Finch retten","Aufgabe:~Dr. Finch wird von Crawler-Bande angegriffen. Die Zeit wird knapp!~Dr. Finch befreien und zur Harvester zurück eskortieren.~~Taktischer Hinweis:~Vendetta Sniper ideal um leicht gepanzerte, weit entfernte Ziele zu eliminieren! Auf's Cockpit zielen!"],
+	["mtake_1h4","Stoney in Gefahr","Aufgabe:~Die Eerie eskortieren, damit Stoney Fox befreit werden kann.~Anschließend die Eerie nach Atacama City geleiten.~~Taktischer Hinweis:~Schiffe der Tornado Zone sind im Cockpit-Bereich mangelhaft geschützt!"],
+	["mtake_1h5","Mighty Maggie","Aufgabe:~Neues Boot beschaffen.~Einige Verrückte versuchen, sich in der Station Scavenger zu verstecken.~Sie sind im Besitz dreier interessanter Boote.~~Taktischer Hinweis:~EMPactor sollte an Bord sein!~FlashSharks gegen starken EMP-Schild einsetzen!"],
+	["mtake_1n1","Intrepido","Aufgabe:~Goons, im Dienste von Atahualpa Jones, wurde von der Intrepido hochgenommen.~Goons aufspüren, ihn befreien und nach Atacama City zurückbringen.~~Taktischer Hinweis:~Die Intrepido fährt Boote, die den leichten Scouts der Atlantischen Föderation ähneln!"],
+	["mtake_1n2","Der Coup","Aufgabe:~Zwei Frachter müssen auf ihrem Weg zur Station Brainfire gestoppt werden.~Die Eerie dockt dann an um die Ladung zu erbeuten.~~Taktischer Hinweis:~Falls Brainfire Verstärkung entsendet, sollte zusätzlich zur EMPactor eine wirkungsvolle kinetische Waffe montiert sein."],
+	["mtake_2b1","Das Rennen","Aufgabe:~Stoney Fox fordert zu einem Wettrennen!~Dem Sieger winkt eine kleine, feine Belohnung!~~Taktischer Hinweis:~Nur die Salty Dog hat eine Chance gegen Stoneys Boot!~Kinetische Waffen sind nicht erlaubt!~Aber EMP-Waffen dürften nützlich sein!"],
+	["mtake_2h1","Machina Antarctica","Aufgabe:~Dr. Finch zum Außenposten der Machina Antarctica eskortieren.~Der Auftraggeberin darf auf keinen Fall etwas zustoßen!~~Taktischer Hinweis:~Die See um Kap Horn wimmelt vor Piraten, die aber nur über leichte Bewaffnung verfügen!"],
+	["mtake_2h2","Chow Lung Angriff","Aufgabe:~Chow Lung hat Amitab und May Ling nach langer Zeit aufgespürt.~Er greift die Harvester massiv an. Der Frachter muss beschützt werden!~~Taktischer Hinweis:~Vor dem Dock wird bereits Feindfeuer gemeldet. Vorsicht beim Abdocken!"],
+	["mtake_2h3","Swedenborgs Flucht","Aufgabe:~Swedenborg hat eine neuartige Waffe, eine Forschungsarbeit von Dr. Finch, erbeutet.~Amitab will diese Waffe haben!~Swedenborg verfolgen, dessen Schiff lahm legen, aber auf keinen Fall zerstören!~~Taktischer Hinweis: EMPactor mitnehmen!"],
+	["mtake_3b1","Redbeard Eldorado","Aufgabe:~Captain Redbeards Versteck ausheben.~Weg durch den Canyon nehmen.~Verteidigungsanlagen ausschalten."],
+	["mtake_3h1","Angriff","Aufgabe:~Harvester steht unter Feindbeschuss.~Angreifer nicht identifiziert.~Sofortige Abwehrmaßnahmen einleiten und Angreifer vernichten!"],
+	["mtake_3h2","Der Konvoi","Aufgabe:~Militärischen Konvoi am ersten Navigationspunkt ansteuern.~Den Konvoi durch dieses Gebiet eskortieren.~Befehlen Amitabs folgen."],
+	["mtake_3h3","Asylum Patrouille","Aufgabe:~Ein Angriff von Leo van der Waals Schergen wird erwartet.~Gemeinsam mit May Ling um das Gebiet von El Topo's Asylum Patrouille fahren.~Funkanweisungen befolgen.~~Taktischer Hinweis:~Die Schiffe von EnTrOx sind schwer gepanzert!"],
+	["mtake_3h4","Das Höllenbad","Aufgabe:~Das Höllenbad wartet.~Erkundung des Abgrundes."],
+	["mtake_3h5","Sein oder nicht sein","Aufgabe:~Harvester wird von Lt. Hamlet und zwei weiteren Söldnern mit EMP-Waffen angegriffen.~So schnell wie möglich abdocken und die Harvester beschützen.~Lt. Hamlet vernichten.~~Taktischer Hinweis:~Der Feind ist bestens ausgerüstet!"],
+	["mtake_3n1","Piraten","Aufgabe:~Piratenangriff auf El Topos bereits angeschlagenen Verteidigungsanlagen.~Vernichtung der Piraten bringt viele Credits."],
+	["mtake_3n2","Plünderung","Aufgabe:~Außenposten der Atlantischen Föderation überfallen.~Die Eerie zu einem entlegenen Fahrzeug-Hangar eskortieren und Andock-Manöver decken.~~Taktischer Hinweis:~Viele Bodeneinheiten und Geschütztürme werden erwartet!"],
+	["mtake_3n3","Freeman","Aufgabe:~Freeman ist mit seinem neuen Schiff noch nicht ganz vertraut und muss zum EnTroPoint eskortiert werden."],
+	["mtake_4h1","Crawler und Engel","Aufgabe:~Crawler greifen die Harvester an.~Angelinas Schiff wurde gekapert und verschleppt.~Angelina befreien.~~Taktischer Hinweis:~Ein Crawler Scout wäre praktisch!"],
+	["mtake_4h2","Schatzsuche","Aufgabe:~Das Versteck des Schatzes von Juan Garcia Lopez finden."],
+	["mtake_4h3","Der Schatz des Lopez","Aufgabe:~Amitab zum Dock des Versteckes eskortieren."],
+	["mtake_4h4","Die Ordenssöldner","Aufgabe:~Ordenssöldner greifen die Harvester an.~Alarmstufe Rot! Feind vernichten oder in die Flucht schlagen.~~Taktischer Hinweis:~Die Ordenssöldner sind bestens ausgerüstet!"],
+	["mtake_4h5","Angelinas Offenbarung","Aufgabe:~Neue Angriffswelle der Ordenssöldner attackiert die Harvester.~~Taktischer Hinweis:~Die Ordenssöldner sind bestens ausgerüstet!"],
+	["mtake_5b1","Drakes Rache","Aufgabe:~Cpt. Redbeard ist der Mörder deiner Mutter.~Rache! Cpt. Redbeard vernichten."],
+	["mtake_5h1","Deimos","Aufgabe:~Verteidigungsanlagen von Lunats Werft zerstören.~Andock-Manöver der Eerie überwachen.~Die Schiffe Deimos und Eerie zum Dock von Neopolis eskortieren.~~Taktischer Hinweis:~Viele Bodenziele und Geschütztürme werden erwartet!"],
+	["mtake_5h2","Das Museum der Moderne","Aufgabe:~Verteidigungsanlagen des Museums durch Zerstörung der Energie-Relais des Stadtviertels ausschalten.~Durch Versorgungstunnel ins Museum vordringen.~Andock-Manöver der Eerie überwachen.~Die Eerie zum Dock von Neopolis eskortieren."],
+	["mtake_5h3","Der Öffner der Tore","Aufgabe:~Stoney und Animal aus dem Navy Headquarter befreien.~Durch Sub-Level den Notgenerator für den Versorgungstunnel zerstören.~Andock-Manöver der Eerie überwachen.~~Taktischer Hinweis:~Im Sub-Level ist es sehr eng! Salty Dog nehmen!"],
+	["mtake_5n1","Vastian Griegh","Aufgabe:~Vastian Grieghs Transporter ausrauben."],
+	["mtake_6h1","Stregas Zorn","Aufgabe:~Queen Strega startet Großangriff ihrer Ordenssöldner.~Harvester verteidigen.~Feind vernichten.~~Taktischer Hinweis:~Die Ordenssöldner sind bestens ausgerüstet!"],
+	["mtake_6h2","Blutrache","Aufgabe:~Queen Strega wartet auf das finale Duell.~Rache für Nat!"],
+	["mtake_6h3","Die Tränen des Engels","Aufgabe:~Hier liegt der Eingang zum Felsengrab verborgen.~Zugang suchen und öffnen.~~Taktischer Hinweis:~McGregors Torpedo mitnehmen!"],
+	["mtake_gen","generische_sounds","Generische Sounds ohne spezifische Mission"]
+	]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -1176,11 +1249,14 @@ func ParseStakes(listobj):
 				continue
 
 func MtakeDictCreate():
-	for filename in mtakefilelist:
+	for missionentry in missioninfolist:
+		var filename = missionentry[0]
 		var mtakelist = Mtake_List.new(FileOptions)
 		mtakelist.filepath_des = mtakelist.filepath_des + filename + ".des"
 		mtakelist.filepath_loc = mtakelist.filepath_loc + filename + ".loc"
 		mtakelist.filename = filename
+		mtakelist.missionname = missionentry[1]
+		mtakelist.missiondescription = missionentry[2]
 		ParseMtakes(mtakelist)
 		mtakedict[filename] = mtakelist
 	
@@ -1194,6 +1270,8 @@ class Mtake_List extends FileDataTypes:
 	var table = {}
 	var last_key = -1
 	var filename = ""
+	var missionname = ""
+	var missiondescription = ""
 	
 	func _init(FileOptions):
 		self.aquanox_basepath = FileOptions.aquanox_basepath

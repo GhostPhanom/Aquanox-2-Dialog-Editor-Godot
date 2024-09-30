@@ -171,7 +171,7 @@ func _on_print_all_m_take_pressed() -> void:
 				if missionname_printed == false:
 					print("Mission: " + mission)
 					missionname_printed = true
-				print(currentperson.Name + ": " + take.Text)
+				print("Key:" + str(take.Key) + " " + currentperson.Name + ": " + take.Text)
 				counter += 1
 	print("Number of lines: " + str(counter))
 
@@ -203,3 +203,36 @@ func _on_print_all_s_take_pressed() -> void:
 						print(personname + ": " + take.Text)
 						counter += 1
 	print("Counter: " + str(counter))
+
+
+func _on_print_all_m_take_v_2_pressed() -> void:
+	var counter = 0
+	var person_present = false
+	var export_needed = false
+	var complete_text = ""
+	var current_textblock = ""
+	for mission in main_data_object.mtakedict.keys():
+		person_present = false
+		current_textblock = "#####\n" + "Mission: " + main_data_object.mtakedict[mission].filename + "\n"+ "Mission Name: " + main_data_object.mtakedict[mission].missionname + "\n"+ "Mission Description: " + main_data_object.mtakedict[mission].missiondescription + "\n\n"
+		for mtake in main_data_object.mtakedict[mission].table.keys():
+			var take = main_data_object.mtakedict[mission].table[mtake]
+			if take.Person == currentperson.Key:
+				person_present = true
+				current_textblock = current_textblock + "**Key:" + str(take.Key) + " " + currentperson.Name + ": " + take.Text + "**\n"
+				counter += 1
+			elif main_data_object.mtakedict[mission].filename != "mtake_gen":
+				var person = main_data_object.charlist.GetObjectwithKey(take.Person)
+				current_textblock = current_textblock + person.Name + ": " + take.Text + "\n"
+		if person_present == true:
+			export_needed = true
+			complete_text = complete_text + current_textblock
+	complete_text = complete_text + "Number of lines: " + str(counter)
+	if export_needed == true:
+		var currenttimepath = Time.get_datetime_string_from_system().replace(":","-").left(-3)
+		var error = DirAccess.make_dir_recursive_absolute(main_data_object.export_basepath + currenttimepath + "/")
+		var file = FileAccess.open(main_data_object.export_basepath + currenttimepath + "/" + "person_" + str(currentperson.Key) + ".md", FileAccess.WRITE)
+		file.store_string(complete_text)
+		file.close()
+		print(main_data_object.export_basepath + currenttimepath + "/" + "person_" + str(currentperson.Key) + ".md")
+	else:
+		print("No lines for character found. No file exported")

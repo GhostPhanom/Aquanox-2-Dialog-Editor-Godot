@@ -141,6 +141,10 @@ text = "Reload Display Image Preview"
 layout_mode = 2
 text = "Print Mission Dialog for Person to Console"
 
+[node name="PrintAllMTakeV2" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Print detailed Mission Dialog to FILE"
+
 [node name="PrintAllSTake" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Print Between Dialog for Person to Console"
@@ -177,5 +181,6 @@ color = Color(0.344076, 0.344076, 0.344076, 1)
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/DeleteLastEntry" to="." method="_on_delete_last_entry_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PreviewPictures" to="." method="_on_preview_pictures_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PrintAllMTake" to="." method="_on_print_all_m_take_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/PrintAllMTakeV2" to="." method="_on_print_all_m_take_v_2_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PrintAllSTake" to="." method="_on_print_all_s_take_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/ExportAllFiles" to="." method="_on_export_all_files_pressed"]
