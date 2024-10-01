@@ -12,6 +12,8 @@ var current_dialog_preview_instance = null
 var preview_sound_generated = false
 var preview_sound_volume = ""
 
+var person_filter = 0
+
 var missionlist = [
 	"mtake_1h1",
 	"mtake_1h2",
@@ -121,11 +123,11 @@ func UpdateStakeList(index):
 	for key in mtakelist.keys():
 		print(key)
 		print(mtakelist[key].Person)
-		var override_character_filter = -1################################IMPORTANT FILTER##########################################
-		if override_character_filter > -1:
-			$HBoxContainer/VBoxContainer/Label.text = "Missionlist !!! Filter in Code enabled for Person:" + str(override_character_filter)
+		if person_filter > 0:
+			$HBoxContainer/VBoxContainer/Label.text = "Missionlist !!! Filter in Field enabled for Person:" + str(person_filter)
 		
-		if override_character_filter == -1:
+		if person_filter == 0:
+			$HBoxContainer/VBoxContainer/Label.text = "Missionlist"
 			var tempstring = str(counter) + " "
 			tempstring += main_data_object.charlist.GetObjectwithKey(mtakelist[key].Person).Name + ": "
 			var shorttext = mtakelist[key].Text.left(50)
@@ -134,7 +136,7 @@ func UpdateStakeList(index):
 			current_mtake_list.append(mtakelist[key])
 			$HBoxContainer/VBoxContainer2/MtakeList.add_item(tempstring)
 			counter += 1
-		elif mtakelist[key].Person == override_character_filter:
+		elif mtakelist[key].Person == person_filter:
 			var tempstring = str(counter) + " "
 			tempstring += main_data_object.charlist.GetObjectwithKey(mtakelist[key].Person).Name + ": "
 			var shorttext = mtakelist[key].Text.left(50)
@@ -292,3 +294,8 @@ func _on_play_refernce_sound_pressed() -> void:
 			current_dialog_preview_instance = dialog_preview_scene.instantiate()
 			add_child(current_dialog_preview_instance)
 			current_dialog_preview_instance.LoadSingleSound(main_data_object.audio_reference_mtake_path)
+
+
+func _on_person_filter_value_changed(value: float) -> void:
+	person_filter = int(value)
+	pass # Replace with function body.
