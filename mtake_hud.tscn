@@ -129,7 +129,7 @@ text = "Modify Voice Line Volume in % (110 % means 10% increase)"
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 5.0
-max_value = 200.0
+max_value = 300.0
 step = 5.0
 value = 110.0
 
@@ -173,8 +173,8 @@ wrap_mode = 1
 
 [node name="SoundPreview" type="AudioStreamPlayer" parent="."]
 
-[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_room_button_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_mission_button_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/MissionButton" to="." method="_on_room_button_item_selected"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/Dialog_Comment_des" to="." method="_on_dialog_comment_des_text_changed"]
 [connection signal="value_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer2/PersonFilter" to="." method="_on_person_filter_value_changed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/UpdatePersonKey" to="." method="_on_update_person_key_pressed"]
